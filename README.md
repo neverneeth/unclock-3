@@ -21,7 +21,7 @@ The hegemony of the standardized clock system. The entrapment of SI units, fixed
 1. World Clock - Ever wanted time from another place but felt too lazy to pick the place? We've got you covered. You just have to click Add Time. We'll pull random locations from around the world and give you the time from there.
 2. Stopwatch - A standard stopwatch. Except the units aren't standard. The time is displayed in handpicked(AI Generated on every restart) units of time.
 3. Timer - Runs just like any other timer. Except the real time weather from your locality slows or speeds it down to match your vibe. Rainy weather ensures slower clock speed while hotter weather makes it faster.
-4. Alarm - Plays an alarm sound as loud as possible. We've abstracted away the time setting for you. It plays if and when you click the button. No more snooze or buttons. Or any other buttons as a matter of fact
+4. Alarm - Plays an alarm sound as loud as possible. We've abstracted away the time setting for you. It plays if and when you click the button. No more snooze or stop buttons. Or any other buttons as a matter of fact
 
 ## Technical Details
 ### Technologies/Components Used
