@@ -41,9 +41,6 @@ pip install Flask groq pytz owm timezonefinder
 # Run
 python app.py "Open in localhost or port"
 
-### Project Documentation
-For Software:
-
 # Screenshots
 ![image](https://github.com/user-attachments/assets/eebd5f2a-94e4-481f-b5ac-09997da8a193)
 * home page
