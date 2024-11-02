@@ -50,7 +50,17 @@
         <li><a href="/world_clock">World Clock</a></li>
         <li><a href="/stopwatch">Stopwatch</a></li>
         <li><a href="/timer">Timer</a></li>
-        <li><a href="/alarm">Alarm</a></li>
+        <li><a onclick="playAlarmSound()">Alarm</a></li>
     </ul>
+
+    <!-- Add the audio element -->
+    <audio id="alarmSound" src="{{ url_for('static', filename='audio/alarm_sound.mp3') }}" preload="auto"></audio>
+
+    <script>
+        function playAlarmSound() {
+            var audio = document.getElementById("alarmSound");
+            audio.play();
+        }
+    </script>
 </body>
 </html>
