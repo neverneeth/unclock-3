@@ -1,7 +1,7 @@
 <img width="1280" alt="readme-banner" src="https://github.com/user-attachments/assets/35332e92-44cb-425b-9dff-27bcf1023c6c">
 
 # Unclock 🕑
-
+**The Project uses Groq AI which is free. Not to be confused with Grok developed by X.ai**
 
 ## Basic Details
 ### Team Name: Redbone
@@ -29,11 +29,15 @@ For Software:
 - Python, JS, HTML, CSS
 - Flask
 - flask, pytz, groq, timezonefinder
-- Open Weather Map, groq API
+- Open Weather Map, Groq AI
 
 
 ### Implementation
-For Software:
+The app has been implemented using the flask python framework. The home page runs using app.py and is structured in index.html. The other features have been implemented as linked pages defined in the features folder. 
+The world clock randomly picks a location, finds the nearest timezone and displays the time.
+The units.py file generates a new unit of time using Groq AI everytime the stopwatch is reset. The stopwatch runs by dividing the elapsed time by the number of seconds that have passed.
+The timer takes in the device location, obtains the last updated weather as shown in Open Weather Map. It then calculates a dilation factor based on the various prevailing weather conditions. This dilation factor directly slows or speeds up the timer based on the weather.
+The alarm simply uses a JavaScript trigger to play an alarm noise
 
 # Installation
 pip install Flask groq pytz owm timezonefinder
@@ -57,11 +61,9 @@ python app.py "Open in localhost or port"
 
 ### Project Demo
 # Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
+[https://drive.google.com/file/d/1ICAN2cbRFHUA158VIkr-dBHVGW8HK9-z/view?usp=sharing]
+The video displays all the features of the unclock app, except for alarm which requires sound.
 
-# Additional Demos
-[Add any extra demo materials/links]
 
 ## Team Contributions
 - Navaneeth V. Sankar: Stopwatch, Design, AI
