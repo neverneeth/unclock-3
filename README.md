@@ -51,6 +51,7 @@ pip install Flask groq pytz owm timezonefinder
    ```
 2. Fill in the actual values in `.env`.
 3. Or obtain a groq API key of your own and set it in units.py. It is free and takes very little time.
+## Run
 python app.py (Open in localhost or port)
 
 # Screenshots
