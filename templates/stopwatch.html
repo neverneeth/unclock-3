@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stopwatch - UnClock App</title>
+  <style>
+    /* Base styling */
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background-color: #222;
+      color: #00FF00;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      margin: 20px 0;
+      text-shadow: 0 0 10px #00FF00;
+    }
+
+    /* Controls */
+    #controls {
+      margin: 20px 0;
+    }
+
+    button {
+      background-color: #444;
+      color: #00FF00;
+      border: 1px solid #00FF00;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin: 10px;
+    }
+
+    button:hover {
+      background-color: #00FF00;
+      color: #222;
+    }
+
+    /* Time, Unit, and Phenomenon display with glow effect */
+    .time,
+    .unit {
+      font-size: 50px;
+      font-weight: 700;
+      color: #00FF00;
+      text-shadow: 0 0 5px #00FF00;
+    }
+
+    .phenomenon {
+      font-size: 20px;
+      font-weight: 700;
+      color: #00FF00;
+      text-shadow: 0 0 5px #00FF00;
+    }
+
+    /* Back button positioning */
+    .back-button {
+      text-align: center;
+      margin: 15px;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h1>Stopwatch</h1>
+
+<div id="time-display" class="time"></div>
+<div class="unit" id="unit-display"></div>
+<div class="phenomenon" id="phenon-display"></div> <!-- New element for unit phenomenon -->
+
+<div id="controls">
+  <button onclick="startStopwatch()">Start</button>
+  <button onclick="stopStopwatch()">Stop</button>
+  <button onclick="resetStopwatch()">Reset</button>
+</div>
+
+<script>
+function updateDisplay() {
+  $.get('/stopwatch/get_time', function(data) {
+    $('#time-display').text(data.time);
+    $('#unit-display').text(data.unitname);
+    $('#phenon-display').text(data.unitphenon); // Display the phenomenon
+  });
+}
+
+function startStopwatch() {
+  $.post('/stopwatch/start', function() {
+    updateDisplay();
+    refreshInterval = setInterval(updateDisplay, 500);
+  });
+}
+
+function stopStopwatch() {
+  $.post('/stopwatch/stop', function() {
+    clearInterval(refreshInterval);
+  });
+}
+
+function resetStopwatch() {
+  $.post('/stopwatch/reset', function() {
+    clearInterval(refreshInterval);
+    updateDisplay();
+  });
+}
+
+let refreshInterval;
+$(document).ready(function() {
+  updateDisplay();
+  refreshInterval = setInterval(updateDisplay, 500);
+});
+</script>
+
+<div class="back-button">
+  <button onclick="window.location.href='/'">Back to Home</button>
+</div>
+
+</body>
+</html>
