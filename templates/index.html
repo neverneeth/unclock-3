@@ -3,10 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>UnClock</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #222;
+            color: #00FF00;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1.title {
+            margin: 20px 0;
+            text-shadow: 0 0 10px #00FF00;
+        }
+
+        ul.nav {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul.nav li {
+            display: inline-block;
+            margin: 10px;
+        }
+
+        ul.nav a {
+            color: #00FF00;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid #00FF00;
+            border-radius: 5px;
+            background-color: #444;
+            transition: background-color 0.3s;
+        }
+
+        ul.nav a:hover {
+            background-color: #00FF00;
+            color: #222;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to UnClock!</h1>
-    <ul>
+    <h1 class="title">Welcome to UnClock!</h1>
+    <ul class="nav">
         <li><a href="/world_clock">World Clock</a></li>
         <li><a href="/stopwatch">Stopwatch</a></li>
         <li><a href="/timer">Timer</a></li>
