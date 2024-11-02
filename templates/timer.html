@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Timer - UnClock App</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Base styling */
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #222;
+            color: #00FF00;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin: 20px 0;
+            text-shadow: 0 0 10px #00FF00;
+        }
+
+        /* Timer display */
+        #timer {
+            font-size: 36px;
+            margin-top: 20px;
+            color: #00FF00;
+            text-shadow: 0 0 5px #00FF00;
+            animation: timerBlink 1s infinite;
+        }
+
+        /* Controls */
+        #controls {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #444;
+            color: #00FF00;
+            border: 1px solid #00FF00;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #00FF00;
+            color: #222;
+        }
+
+        @keyframes timerBlink {
+          0% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.7;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Timer</h1>
+
+<div id="timer"></div>
+
+<div id="controls">
+  {% if duration %}
+    <button id="start">Start Timer</button>
+    <button id="stop">Stop Timer</button>
+  {% else %}
+    <form action="/timer/set_timer" method="POST">
+      <label for="duration">Set Duration (seconds):</label>
+      <input type="number" id="duration" name="duration" min="1" required>
+      <button type="submit">Set Timer</button>
+    </form>
+  {% endif %}
+</div>
+
+<script>
+$(document).ready(function() {
+  const timerElement = $('#timer');
+  let timerInterval;
+  let remainingTime = {{ duration or 0 }}; // Get initial duration from template
+
+  function updateTimer() {
+    if (remainingTime > 0) {
+      const minutes = Math.floor(remainingTime / 60);
+      const seconds = remainingTime % 60;
+      timerElement.text(`${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+      remainingTime--;
+    } else {
+      clearInterval(timerInterval);
+      timerElement.text("Timer Finished!");
+      // You can play an audio notification here (optional)
+    }
+  }
+
+  $("#start").click(function() {
+    timerInterval = setInterval(updateTimer, 1000);
+  });
+
+  $("#stop").click(function() {
+    clearInterval(timerInterval);
+  });
+});
+</script>
+
+<div class="back-button">
+    <button onclick="window.location.href='/'">Back to Home</button>
+</div>
+
+</body>
+</html>
