@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Timer - UnClock App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather-Influenced Timer</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        /* Base styling */
         body {
             font-family: 'Courier New', Courier, monospace;
             background-color: #222;
@@ -18,100 +18,158 @@
             margin: 20px 0;
             text-shadow: 0 0 10px #00FF00;
         }
-
-        /* Timer display */
         #timer {
             font-size: 36px;
             margin-top: 20px;
-            color: #00FF00;
             text-shadow: 0 0 5px #00FF00;
-            animation: timerBlink 1s infinite;
         }
-
-        /* Controls */
         #controls {
             margin-top: 20px;
         }
-
-        button {
+        button, input {
             background-color: #444;
             color: #00FF00;
             border: 1px solid #00FF00;
-            padding: 10px 20px;
+            padding: 10px;
             font-size: 16px;
+            margin: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
-
         button:hover {
             background-color: #00FF00;
             color: #222;
         }
-
-        @keyframes timerBlink {
-          0% {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0.7;
-          }
-          100% {
-            opacity: 1;
-          }
+        input {
+            text-align: center;
+            width: 80px;
+        }
+        #weather {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #00FF00;
+        }
+        #container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        #weather {
+            margin-left: 50px; /* Add space between timer and weather */
         }
     </style>
 </head>
 <body>
+    <h1>Weather-Influenced Timer</h1>
 
-<h1>Timer</h1>
+    <div>
+        <label for="timeInput">Set Time (minutes):</label>
+        <input type="number" id="timeInput" min="1" placeholder="Minutes">
+    </div>
 
-<div id="timer"></div>
+    <div id="container">
+        <div id="timer">00:00</div>
+        <div id="weather">
+            <div id="temperature">Temperature: -- °C</div>
+            <div id="humidity">Humidity: -- %</div>
+            <div id="wind">Wind Speed: -- m/s</div>
+            <div id="latitude">Latitude: --</div>
+            <div id="longitude">Longitude: --</div>
+        </div>
+    </div>
 
-<div id="controls">
-  {% if duration %}
-    <button id="start">Start Timer</button>
-    <button id="stop">Stop Timer</button>
-  {% else %}
-    <form action="/timer/set_timer" method="POST">
-      <label for="duration">Set Duration (seconds):</label>
-      <input type="number" id="duration" name="duration" min="1" required>
-      <button type="submit">Set Timer</button>
-    </form>
-  {% endif %}
-</div>
+    <div id="controls">
+        <button id="start" data-dilation-factor="{{ dilation_factor }}">Start Timer</button>
+        <button id="stop">Stop Timer</button>
+    </div>
 
-<script>
-$(document).ready(function() {
-  const timerElement = $('#timer');
-  let timerInterval;
-  let remainingTime = {{ duration or 0 }}; // Get initial duration from template
+    <script>
+        $(document).ready(function() {
+            const timerElement = $('#timer');
+            const temperatureElement = $('#temperature');
+            const humidityElement = $('#humidity');
+            const windElement = $('#wind');
+            const latitudeElement = $('#latitude');
+            const longitudeElement = $('#longitude');
+            let timerInterval;
+            let remainingTime = 0;
 
-  function updateTimer() {
-    if (remainingTime > 0) {
-      const minutes = Math.floor(remainingTime / 60);
-      const seconds = remainingTime % 60;
-      timerElement.text(`${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
-      remainingTime--;
-    } else {
-      clearInterval(timerInterval);
-      timerElement.text("Timer Finished!");
-      // You can play an audio notification here (optional)
-    }
-  }
+            // Read dilation factor from the data attribute
+            const dilationFactor = parseFloat($('#start').data('dilation-factor')) || 1;
 
-  $("#start").click(function() {
-    timerInterval = setInterval(updateTimer, 1000);
-  });
+            function updateWeather(latitude, longitude) {
+                const apiKey = '9b6e6a702e186c37bbc599a575b139b2'; // Replace with your actual API key
+                const url = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
 
-  $("#stop").click(function() {
-    clearInterval(timerInterval);
-  });
-});
-</script>
+                $.get(url, function(data) {
+                    const temperature = data.main.temp;
+                    const humidity = data.main.humidity;
+                    const windSpeed = data.wind.speed;
 
-<div class="back-button">
-    <button onclick="window.location.href='/'">Back to Home</button>
-</div>
+                    temperatureElement.text(`Temperature: ${temperature} °C`);
+                    humidityElement.text(`Humidity: ${humidity} %`);
+                    windElement.text(`Wind Speed: ${windSpeed} m/s`);
+                    latitudeElement.text(`Latitude: ${latitude}`);
+                    longitudeElement.text(`Longitude: ${longitude}`);
+                }).fail(function() {
+                    temperatureElement.text("Temperature: -- °C");
+                    humidityElement.text("Humidity: -- %");
+                    windElement.text("Wind Speed: -- m/s");
+                    latitudeElement.text("Latitude: --");
+                    longitudeElement.text("Longitude: --");
+                });
+            }
 
+            function getLocationAndFetchWeather() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        updateWeather(latitude, longitude);
+                    }, function() {
+                        alert("Unable to retrieve your location.");
+                        latitudeElement.text("Latitude: --");
+                        longitudeElement.text("Longitude: --");
+                    });
+                } else {
+                    alert("Geolocation is not supported by this browser.");
+                }
+            }
+
+            function updateTimer() {
+                if (remainingTime > 0) {
+                    const minutes = Math.floor(remainingTime / 60);
+                    const seconds = Math.floor(remainingTime % 60); // Ensure seconds are whole numbers
+                    timerElement.text(`${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+                    remainingTime -= dilationFactor;  // Adjust countdown speed using the dilation factor
+                } else {
+                    clearInterval(timerInterval);
+                    timerElement.text("Timer Finished!");
+                }
+            }
+
+            $("#start").click(function() {
+                const inputTime = parseInt($('#timeInput').val(), 10);
+                if (isNaN(inputTime) || inputTime <= 0) {
+                    alert("Please enter a valid number of minutes.");
+                    return;
+                }
+                remainingTime = inputTime * 60;  // Convert input time to seconds
+                clearInterval(timerInterval);  // Clear any existing timer interval
+                updateTimer();  // Initialize the display with the set time
+                timerInterval = setInterval(updateTimer, 1000);  // Start the countdown
+                
+                // Fetch and display weather data based on current location
+                getLocationAndFetchWeather();
+            });
+
+            $("#stop").click(function() {
+                clearInterval(timerInterval);
+                timerElement.text("Timer Stopped");
+            });
+        });
+    </script>
 </body>
 </html>
+
