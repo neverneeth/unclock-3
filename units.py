@@ -1,11 +1,11 @@
 import os
 import json
 from groq import Groq
-import os
+from dotenv import load_dotenv
 
-from groq import Groq
 
-client = Groq()
+load_dotenv()
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 def unitgen():
     completion = client.chat.completions.create(
         model="llama3-8b-8192",
