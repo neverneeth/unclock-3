@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather-Influenced Timer</title>
+    <title>Timer</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
@@ -80,6 +80,7 @@
     </div>
 
     <div id="controls">
+        <!-- Include dilation factor as a data attribute -->
         <button id="start" data-dilation-factor="{{ dilation_factor }}">Start Timer</button>
         <button id="stop">Stop Timer</button>
     </div>
@@ -121,22 +122,6 @@
                 });
             }
 
-            function getLocationAndFetchWeather() {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function(position) {
-                        const latitude = position.coords.latitude;
-                        const longitude = position.coords.longitude;
-                        updateWeather(latitude, longitude);
-                    }, function() {
-                        alert("Unable to retrieve your location.");
-                        latitudeElement.text("Latitude: --");
-                        longitudeElement.text("Longitude: --");
-                    });
-                } else {
-                    alert("Geolocation is not supported by this browser.");
-                }
-            }
-
             function updateTimer() {
                 if (remainingTime > 0) {
                     const minutes = Math.floor(remainingTime / 60);
@@ -160,8 +145,10 @@
                 updateTimer();  // Initialize the display with the set time
                 timerInterval = setInterval(updateTimer, 1000);  // Start the countdown
                 
-                // Fetch and display weather data based on current location
-                getLocationAndFetchWeather();
+                // Fetch and display weather data based on the coordinates (replace with actual coordinates)
+                const latitude = 0.0; // Replace with actual latitude
+                const longitude = 0.0; // Replace with actual longitude
+                updateWeather(latitude, longitude);
             });
 
             $("#stop").click(function() {
