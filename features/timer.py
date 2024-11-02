@@ -49,11 +49,11 @@ def calculate_dilation_factor(latitude, longitude):
 
     # Map severity index to dilation factor (adjust ranges as needed)
     if severity_index < 0.5:
-        dilation_factor = 0.45  # Slightly faster
+        dilation_factor = 1.54  # Slightly faster
     elif severity_index < 1.0:
-        dilation_factor = 1.55  # Slightly slower
+        dilation_factor = 0.67  # Slightly slower
     else:
-        dilation_factor = 2.0  # Significantly slower
+        dilation_factor = 2.00  # Significantly slower
 
     return dilation_factor
 
@@ -65,23 +65,15 @@ def timer():
     duration = 3600  # Example: 1-hour timer
     dilation_factor = calculate_dilation_factor(latitude, longitude)
 
-    # Calculate the adjusted duration and round it off
-    adjusted_duration = round(duration * dilation_factor)
-
-    return render_template('timer.html', duration=adjusted_duration, dilation_factor=dilation_factor)
+    return render_template('timer.html', duration=duration, dilation_factor=dilation_factor)
 
 @timer_bp.route('/set_timer', methods=['POST'])
 def set_timer():
-    # Get the duration and location data from the request form
+    # Get the duration from the request form
     duration = int(request.form.get('duration'))
-    latitude = float(request.form.get('latitude', 0.0))
-    longitude = float(request.form.get('longitude', 0.0))
 
-    # Calculate the dilation factor using the provided latitude and longitude
-    dilation_factor = calculate_dilation_factor(latitude, longitude)
+    # You can implement logic here to store the timer duration
+    # in a session or database (optional)
 
-    # Adjust the duration based on the dilation factor and round off to an integer
-    adjusted_duration = round(duration * dilation_factor)
-
-    # Render the timer page with the rounded adjusted duration and calculated dilation factor
-    return render_template('timer.html', duration=adjusted_duration, dilation_factor=dilation_factor)
+    # Render the timer page with the set duration and dilation factor
+    return render_template('timer.html', duration=duration)
