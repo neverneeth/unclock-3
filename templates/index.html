@@ -5,53 +5,77 @@
     <title>UnClock</title>
     <style>
         body {
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Courier New', monospace;
             background-color: #222;
             color: #00FF00;
             text-align: center;
             margin: 0;
             padding: 0;
+            overflow: hidden; /* Prevent scroll during animation */
         }
 
         h1.title {
             margin: 20px 0;
             text-shadow: 0 0 10px #00FF00;
+            opacity: 0; /* Start invisible */
+            transform: translateY(-20px); /* Start position for animation */
+            animation: fadeInUp 1s forwards; /* Fade in and move up */
         }
 
-        ul.nav {
-            list-style-type: none;
-            padding: 0;
+        @keyframes fadeInUp {
+            to {
+                opacity: 1; /* Fade in */
+                transform: translateY(0); /* End position */
+            }
         }
 
-        ul.nav li {
-            display: inline-block;
-            margin: 10px;
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap; /* Allow wrapping to the next line */
+            margin-top: 50px;
         }
 
-        ul.nav a {
-            color: #00FF00;
-            text-decoration: none;
-            padding: 10px 20px;
-            border: 1px solid #00FF00;
-            border-radius: 5px;
+        .tile {
             background-color: #444;
-            transition: background-color 0.3s;
+            border: 2px solid #00FF00;
+            border-radius: 15px;
+            width: 150px; /* Increased width of the tiles */
+            height: 150px; /* Increased height of the tiles */
+            margin: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #00FF00;
+            font-size: 24px; /* Increased emoji size */
+            opacity: 0; /* Start invisible */
+            transition: opacity 0.5s; /* Fade in transition */
         }
 
-        ul.nav a:hover {
-            background-color: #00FF00;
-            color: #222;
+        .tile:hover {
+            background-color: #00FF00; /* Change background color on hover */
+            color: #222; /* Change text color on hover */
         }
     </style>
 </head>
 <body>
     <h1 class="title">Welcome to UnClock!</h1>
-    <ul class="nav">
-        <li><a href="/world_clock">World Clock</a></li>
-        <li><a href="/stopwatch">Stopwatch</a></li>
-        <li><a href="/timer">Timer</a></li>
-        <li><a onclick="playAlarmSound()">Alarm</a></li>
-    </ul>
+    <div class="container">
+        <div class="tile" onclick="window.location.href='/world_clock'">
+            🌍<br>World Clock
+        </div>
+        <div class="tile" onclick="window.location.href='/stopwatch'">
+            ⏱️<br>Stopwatch
+        </div>
+        <div class="tile" onclick="window.location.href='/timer'">
+            ⏳<br>Timer
+        </div>
+        <div class="tile" onclick="playAlarmSound()">
+            🔔<br>Alarm
+        </div>
+    </div>
 
     <!-- Add the audio element -->
     <audio id="alarmSound" src="{{ url_for('static', filename='audio/alarm_sound.mp3') }}" preload="auto"></audio>
@@ -61,6 +85,15 @@
             var audio = document.getElementById("alarmSound");
             audio.play();
         }
+
+        window.onload = function() {
+            // Fade in the tiles
+            const tiles = document.querySelectorAll('.tile');
+            tiles.forEach((tile, index) => {
+                tile.style.opacity = 1; // Fade in
+                tile.style.transitionDelay = `${index * 0.3}s`; // Stagger the fade in
+            });
+        };
     </script>
 </body>
 </html>

@@ -48,9 +48,9 @@ def calculate_dilation_factor(latitude, longitude):
     )
 
     # Map severity index to dilation factor (adjust ranges as needed)
-    if severity_index < 0.5:
-        dilation_factor = 1.54  # Slightly faster
-    elif severity_index < 1.0:
+    if severity_index < 0.25:
+        dilation_factor = 0.3  # Slightly faster
+    elif severity_index < 0.5:
         dilation_factor = 0.67  # Slightly slower
     else:
         dilation_factor = 2.00  # Significantly slower
