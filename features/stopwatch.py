@@ -17,6 +17,8 @@ def stopwatch():
         session['running'] = False
     if 'unit' not in session or 'unitname' not in session or 'unitphenon' not in session:
         session['unit'], session['unitname'], session['unitphenon'] = pick_unit()
+        session['unitname'] = "Second"
+        session['unitphenon'] = "The time taken for a human to realize that he's reading this sentence pointlessly."
     return render_template('stopwatch.html')
 
 @stopwatch_bp.route('/start', methods=['POST'])
