@@ -60,4 +60,4 @@ def get_time():
     # Convert to display time based on selected unit
     displayed_time = "{:.3f}".format(current_time / session['unit']) if session['unit'] > 3 else "{:.0f}".format(current_time / session['unit'])
 
-    return jsonify(time=displayed_time, unitname=session['unitname'], unitphenon=session['unitphenon'])
+    return jsonify(time=displayed_time, unitname=f"""{session['unitname']}s have passed""", unitphenon=session['unitphenon'])
