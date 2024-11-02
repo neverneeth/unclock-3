@@ -40,7 +40,9 @@ The timer takes in the device location, obtains the last updated weather as show
 The alarm simply uses a JavaScript trigger to play an alarm noise
 
 # Installation
-pip install Flask groq pytz owm timezonefinder dotenv
+```bash
+pip install Flask groq pytz timezonefinder dotenv requests
+```
 
 # Run
 ## Setup
