@@ -15,13 +15,13 @@
 Unclock is a versatile clock that performs various unfunctions. It has a world clock, a stopwatch, a timer and an alarm all with a twist ;)
 
 ### The Problem (that doesn't exist)
-The hegemony of standardized clock system. The matrix of SI units and fixed locations and linear shall be overcome.
+The hegemony of the standardized clock system. The entrapment of SI units, fixed locations and linear time progression must be overcome.
 
 ### The Solution (that nobody asked for)
-1. World Clock - Ever wanted time from another place but don't want to pick the place? We've got you covered. You just have to click Add Time. We'll pull random locations from around the world and give you the time.
-2. Stopwatch - A standard stopwatch. Except the units aren't standard. The time is displayed in handpicked(AI Generated) units of time.
-3. Timer - Runs just like any other timer. Except the real time weather from your locality slows or speeds it down. Rainy weather ensures slower clock speed while hotter weather makes it faster.
-4. Alarm - Plays an alarm sound as loud as possible. We've abstracted away the time setting for you. It plays when you click the button.
+1. World Clock - Ever wanted time from another place but felt too lazy to pick the place? We've got you covered. You just have to click Add Time. We'll pull random locations from around the world and give you the time from there.
+2. Stopwatch - A standard stopwatch. Except the units aren't standard. The time is displayed in handpicked(AI Generated on every restart) units of time.
+3. Timer - Runs just like any other timer. Except the real time weather from your locality slows or speeds it down to match your vibe. Rainy weather ensures slower clock speed while hotter weather makes it faster.
+4. Alarm - Plays an alarm sound as loud as possible. We've abstracted away the time setting for you. It plays if and when you click the button. No more snooze or buttons. Or any other buttons as a matter of fact
 
 ## Technical Details
 ### Technologies/Components Used
@@ -35,7 +35,7 @@ For Software:
 ### Implementation
 The app has been implemented using the flask python framework. The home page runs using app.py and is structured in index.html. The other features have been implemented as linked pages defined in the features folder. 
 The world clock randomly picks a location, finds the nearest timezone and displays the time.
-The units.py file generates a new unit of time using Groq AI everytime the stopwatch is reset. The stopwatch runs by dividing the elapsed time by the number of seconds that have passed.
+The units.py file generates a new unit of time using Groq AI everytime the stopwatch is reset. The stopwatch runs by dividing the elapsed time by the new unit of time.
 The timer takes in the device location, obtains the last updated weather as shown in Open Weather Map. It then calculates a dilation factor based on the various prevailing weather conditions. This dilation factor directly slows or speeds up the timer based on the weather.
 The alarm simply uses a JavaScript trigger to play an alarm noise
 
@@ -43,7 +43,7 @@ The alarm simply uses a JavaScript trigger to play an alarm noise
 pip install Flask groq pytz owm timezonefinder
 
 # Run
-python app.py "Open in localhost or port"
+python app.py (Open in localhost or port)
 
 # Screenshots
 ![image](https://github.com/user-attachments/assets/eebd5f2a-94e4-481f-b5ac-09997da8a193)
@@ -67,7 +67,7 @@ The video displays all the features of the unclock app, except for alarm which r
 
 ## Team Contributions
 - Navaneeth V. Sankar: Stopwatch, Design, AI
-- Aithel Christo: World Clock, Timer, Flask Setup, Timezone and weather integration
+- Aithel Christo: World Clock, Timer, Flask Setup, Timezone and Weather integration
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 
