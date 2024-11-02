@@ -5,6 +5,7 @@ from features.timer import timer_bp
 from features.alarm import alarm_bp
 
 app = Flask(__name__)
+app.secret_key = 'kootukare_ningal_secret_key_kando'
 
 # Register the blueprints for each feature
 app.register_blueprint(world_clock_bp, url_prefix='/world_clock')
