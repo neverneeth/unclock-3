@@ -40,7 +40,7 @@ The timer takes in the device location, obtains the last updated weather as show
 The alarm simply uses a JavaScript trigger to play an alarm noise
 
 # Installation
-pip install Flask groq pytz owm timezonefinder
+pip install Flask groq pytz owm timezonefinder dotenv
 
 # Run
 ## Setup
@@ -50,7 +50,10 @@ pip install Flask groq pytz owm timezonefinder
    cp .env.example .env
    ```
 2. Fill in the actual values in `.env`.
-3. Or obtain a groq API key of your own and set it in units.py. It is free and takes very little time.
+3. Or obtain a groq API key of your own and set it up in units.py as shown. It is free and takes very little time.
+   ```bash
+   os.environ["GROQ_API_KEY"] = "your_key_here"
+   ```
 ## Run
 python app.py (Open in localhost or port)
 
