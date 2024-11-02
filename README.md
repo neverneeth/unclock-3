@@ -12,7 +12,7 @@
 - Member 2: Aithel Christo - College of Engineering, Trivandrum
 
 ### Project Description
-Unclock is a versatile clock that performs functions that we can't exploit right now. It has a world clock, a stopwatch, a timer and an alarm all with a twist ;)
+Unclock is a versatile clock that performs various unfunctions. It has a world clock, a stopwatch, a timer and an alarm all with a twist ;)
 
 ### The Problem (that doesn't exist)
 The hegemony of standardized clock system. The matrix of SI units and fixed locations and linear shall be overcome.
