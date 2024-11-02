@@ -32,7 +32,7 @@
       font-size: 16px;
       cursor: pointer;
       transition: background-color 0.3s;
-      margin: 10px; /* Added margin for spacing */
+      margin: 10px;
     }
 
     button:hover {
@@ -40,19 +40,26 @@
       color: #222;
     }
 
-    /* Time and Unit display with glow effect */
+    /* Time, Unit, and Phenomenon display with glow effect */
     .time,
     .unit {
       font-size: 50px;
       font-weight: 700;
-      color: #00FF00; /* Adjust color if needed */
-      text-shadow: 0 0 5px #00FF00; /* Added text-shadow for glow */
+      color: #00FF00;
+      text-shadow: 0 0 5px #00FF00;
+    }
+
+    .phenomenon {
+      font-size: 20px;
+      font-weight: 700;
+      color: #00FF00;
+      text-shadow: 0 0 5px #00FF00;
     }
 
     /* Back button positioning */
     .back-button {
-      text-align: center; /* Center the button horizontally */
-      margin: 15px; /* Add some margin from the bottom */
+      text-align: center;
+      margin: 15px;
     }
   </style>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -63,6 +70,7 @@
 
 <div id="time-display" class="time"></div>
 <div class="unit" id="unit-display"></div>
+<div class="phenomenon" id="phenon-display"></div> <!-- New element for unit phenomenon -->
 
 <div id="controls">
   <button onclick="startStopwatch()">Start</button>
@@ -75,6 +83,7 @@ function updateDisplay() {
   $.get('/stopwatch/get_time', function(data) {
     $('#time-display').text(data.time);
     $('#unit-display').text(data.unitname);
+    $('#phenon-display').text(data.unitphenon); // Display the phenomenon
   });
 }
 
