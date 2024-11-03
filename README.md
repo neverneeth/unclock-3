@@ -41,7 +41,7 @@ The alarm simply uses a JavaScript trigger to play an alarm noise
 
 # Installation
 ```bash
-pip install Flask groq pytz timezonefinder dotenv requests
+pip install Flask groq pytz timezonefinder python-dotenv requests
 ```
 
 # Run
@@ -57,8 +57,9 @@ pip install Flask groq pytz timezonefinder dotenv requests
    os.environ["GROQ_API_KEY"] = "your_key_here"
    ```
 ## Run
+```bash
 python app.py (Open in localhost or port)
-
+```
 # Screenshots
 ![image](https://github.com/user-attachments/assets/eebd5f2a-94e4-481f-b5ac-09997da8a193)
 * home page
