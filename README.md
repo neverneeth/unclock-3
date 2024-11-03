@@ -58,8 +58,9 @@ pip install Flask groq pytz timezonefinder python-dotenv requests
    ```
 ## Run
 ```bash
-python app.py (Open in localhost or port)
+python app.py 
 ```
+(Open in localhost or port)
 # Screenshots
 ![image](https://github.com/user-attachments/assets/eebd5f2a-94e4-481f-b5ac-09997da8a193)
 * home page
